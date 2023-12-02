@@ -3,12 +3,7 @@ use regex::Regex;
 
 fn main() {
     let data = fs::read_to_string("input").unwrap();
-    let game_num = Regex::new(r"Game \d*").unwrap();
     let roll_data = Regex::new(r"(?U)((\d* \p{L}{1}).*)").unwrap();
-
-    let max_red = 12;
-    let max_green = 13;
-    let max_blue = 14;
 
     let mut result = 0;
 
@@ -44,11 +39,7 @@ fn main() {
             }
         }
 
-        if local_max_red <= max_red && local_max_blue <= max_blue && local_max_green <= max_green {
-            let game_num_chars: Vec<_> = game_num.find(line).unwrap().as_str().chars().collect();
-            let game_num_result: String = game_num_chars[5..game_num_chars.len()].iter().collect();
-            result += game_num_result.parse::<u32>().unwrap();
-        }
+        result += local_max_red * local_max_green * local_max_blue;
     }
 
     println!("Result: {result}");
